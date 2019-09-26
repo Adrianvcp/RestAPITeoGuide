@@ -1,21 +1,25 @@
 var express = require('express');
 var mysql = require('mysql');
+var bodyParser = require('body-parser');
 
 var con = mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:'',
-    port: 3307,
-    database:'teoguideDB'
+    host:'us-cdbr-iron-east-02.cleardb.net',
+    user:'b5f6ca89d2404e',
+    password:'010d55c9',
+    port: 3306,
+    database:'heroku_ffe31819dfbd5d2'
 });
 
 
 var app = express();
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}));
+
 
 //get all centros
 app.get("/centro",(req,res,next)=>{
-    con.query('SELECT * FROM centrohistortico',function(error,result,fields){
+    con.query('SELECT * FROM centrohistortico recurso',function(error,result,fields){
         con.on('error',function (err) {
             console.log('[MY SQL ERROR]',err);
         });
@@ -27,6 +31,97 @@ app.get("/centro",(req,res,next)=>{
         }
 
     });
+});
+
+
+
+
+//LogIn
+app.post("/login",(req,res,next)=>{
+    var post_data = req.body;
+    var correo = post_data.correo;
+    var pass = post_data.pass;
+    var query = "SELECT * FROM usuario WHERE tCorreo = '"+correo+"' AND tContraseña = '"+pass+"'";
+    
+    con.query(query,function(error,result,fields) {
+        con.on('error',function (err) {
+            console.log('[MY SQL ERROR]',err);
+        });
+        
+        if (result && result.length) {
+            res.end(JSON.stringify(result));
+        }
+        else{
+            res.end(JSON.stringify("Usuario no encontrado"));
+        }
+    })    
+});
+
+//get centros por idCentroH
+app.get("/centro/:idcentroh",(req,res,next)=>{
+    con.query('SELECT * FROM centrohistortico where idCentroH=?',[req.params.idcentroh],function(error,result,fields){
+        con.on('error',function (err) {
+            console.log('[MY SQL ERROR]',err);
+        });
+
+        if (result && result.length) {
+            res.end(JSON.stringify(result));
+        }else{
+            res.end(JSON.stringify("No centro here"));
+        }
+
+    });
+});
+
+//get perfil Centro historico(con recursos) por idCentroH
+app.get("/perfil/:idcentroh",(req,res,next)=>{
+    con.query('SELECT * FROM centrohistortico c INNER JOIN recurso r where c.idCentroH=?',[req.params.idcentroh],function(error,result,fields){
+        con.on('error',function (err) {
+            console.log('[MY SQL ERROR]',err);
+        });
+        if (result && result.length) {
+            res.end(JSON.stringify(result));
+        }else{
+            res.end(JSON.stringify("No centro "));
+        }
+
+    });
+});
+
+
+//get profile(usuario) por id
+app.get("/profile/:idusuario",(req,res,next)=>{
+    con.query('SELECT * FROM usuario u INNER JOIN redessociales r where u.idUsuario=?',[req.params.idusuario],function(error,result,fields){
+        con.on('error',function (err) {
+            console.log('[MY SQL ERROR]',err);
+        });
+        if (result && result.length) {
+            res.end(JSON.stringify(result));
+        }else{
+            res.end(JSON.stringify("No profile "));
+        }
+    });
+});
+
+
+//get
+app.post("/usuario",(req,res,next)=>{
+    var post_data = req.body;
+    var correo_search = post_data.search;
+    var query = "SELECT * FROM usuario WHERE tCorreo LIKE '%"+correo_search+"%'";
+    
+    con.query(query,function(error,result,fields) {
+        con.on('error',function (err) {
+            console.log('[MY SQL ERROR]',err);
+        });
+        
+        if (result && result.length) {
+            res.end(JSON.stringify(result));
+        }
+        else{
+            res.end(JSON.stringify("Usuario no encontrado"));
+        }
+    })    
 });
 
 //get all Cronograma
@@ -45,21 +140,7 @@ app.get("/Cronograma",(req,res,next)=>{
     });
 });
 
-//get centros by idCentroH
-app.get("/centro/:idCentroH",(req,res,next)=>{
-    con.query('SELECT * FROM centro where idCentroH=?',[req.params.idCentroH],function(error,result,fields){
-        con.on('error',function (err) {
-            console.log('[MY SQL ERROR]',err);
-        });
 
-        if (result && result.length) {
-            res.end(JSON.stringify(result));
-        }else{
-            res.end(JSON.stringify("No centro here"));
-        }
-
-    });
-});
 
 
 //get all Usuarios
@@ -157,7 +238,6 @@ app.post("/filter",(req,res,next)=>{
         }
     })
 });
-
 
 
 app.listen(3000,()=>{
