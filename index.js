@@ -11,6 +11,7 @@ var con = mysql.createConnection({
 });
 
 
+
 var app = express();
 
 app.use(bodyParser.json())
@@ -241,5 +242,5 @@ app.post("/filter",(req,res,next)=>{
 
 
 app.listen(PORT,()=>{
-    console.log('Teoguide REST FUL ON ' + PORT);
+    console.log('Teoguide REST FUL  ON ' + PORT);
 })
