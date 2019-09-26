@@ -28,7 +28,7 @@ app.get("/centro",(req,res,next)=>{
         if (result && result.length) {
             res.end(JSON.stringify(result));
         }else{
-            res.end(JSON.stringify("No  hay centros en la BD"));
+            res.end(JSON.stringify("No hay centros en la BD"));
         }
 
     });
