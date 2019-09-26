@@ -1,7 +1,7 @@
 var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
-
+const PORT = process.env.PORT || 3000;
 var con = mysql.createConnection({
     host:'us-cdbr-iron-east-02.cleardb.net',
     user:'b5f6ca89d2404e',
@@ -240,6 +240,6 @@ app.post("/filter",(req,res,next)=>{
 });
 
 
-app.listen(3000,()=>{
-    console.log('Teoguide REST FUL ON 3000');
+app.listen(PORT,()=>{
+    console.log('Teoguide REST FUL ON ${ PORT }');
 })
