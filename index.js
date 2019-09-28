@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}));
 
 
-
+ 
 
 //get all centros
 app.get("/centro",(req,res,next)=>{
