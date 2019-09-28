@@ -19,7 +19,7 @@ var app = express();
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup('./index.js'));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(openApiDocumentation));
 
 
  
