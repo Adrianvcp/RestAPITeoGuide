@@ -1,6 +1,7 @@
 var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
+
 const PORT = process.env.PORT || 3000;
 var con = mysql.createConnection({
     host:'us-cdbr-iron-east-02.cleardb.net',
@@ -16,6 +17,8 @@ var app = express();
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}));
+
+
 
 
 //get all centros
