@@ -20,7 +20,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 
  
- 
+  
+
 //get all centros
 app.get("/centro",(req,res,next)=>{
     con.query('SELECT * FROM centrohistortico recurso',function(error,result,fields){
