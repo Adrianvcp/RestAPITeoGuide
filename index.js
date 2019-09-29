@@ -2,7 +2,21 @@ var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
 
+
 const PORT = process.env.PORT || 3000;
+const Swagger = require('openapi-doc');
+const swagger = new Swagger();
+    swagger.info('My API', '1.0', 'This is *API*');
+ 
+    // describe API endpoint and action
+    swagger.get('/logs')
+        .operationId('getLogs')
+        .tag('logging')
+        .summary('Gets an array of logs.')
+        .response(200)
+        .action((req, res) => {
+            res.sendStatus(200);
+        });
 const swaggerUi = require('swagger-ui-express');
 const openApiDocumentation = require('./index');
 
@@ -24,7 +38,9 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup('./index.js'));
 
 
  
-   
+app.get('/api-doc', function (req, resp) {
+    resp.send(swagger.apidoc());
+});
 
 //get all centros 
 app.get("/centro",(req,res,next)=>{
