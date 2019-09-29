@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const swaggerUi = require('swagger-ui-express');
 const openApiDocumentation = require('./index');
+
 var con = mysql.createConnection({
     host:'us-cdbr-iron-east-02.cleardb.net',
     user:'b5f6ca89d2404e',
@@ -23,7 +24,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup('./index.js'));
 
 
  
-  
+   
 
 //get all centros 
 app.get("/centro",(req,res,next)=>{
