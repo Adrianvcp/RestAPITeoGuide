@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "teoguide",
+  "private_key_id": "2517cc5884b274d40eea2eced29dd5d06e2cc350",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC0TU4DfYEbgadH\nesxwCNvWrZyzaP6kQ1/m9YjYH/Pw4g5QD9DeCDfJHr9kP4u/CqY4J08kW8okvUxK\nEpqcy/h6Nlq0chdTFREiV46jL2ZWzc4WWGwgmPilSKjunTkLZ7vxdaDYPOxAXs6P\nzFIFanosW4njtEwqhtKKN+3seVt7CBh6ipFGPogFJDiCxxSJuWxgqnkd/kYB6g1o\n8czbHwbDmts6+fWMQgmPKEEz7eA/d3mGOMXgYW8w4s/WdD1WMMJZx6fHOIsO/2PN\nRKk4FUxneTX0CEHeaVbIiw3niDGSzlmvS5l3Ky9KI7ZuFgfZd6KCUAympRGPIo25\nhAROGlTXAgMBAAECggEABE1H4ZDFW35SGxl/S+OvjcVh/2yE5C8bWFZevSazWk76\ndRyQ04tcprbOGDqP6gSmB0xLeMbxNsPcJcmgg2yLxta0fqkDjMmW5BE0vQis0hYM\n/GmAWEgYvqYnfwdPTMoH05tb4BeWsh57ootcdaFJvZ8y1gpU5ZAxRnej0fLp+jB3\n3t7X3I6NT3J5u+Iu8eonQM/PJ4cDRsQXylwTF3KcpsfFMu9e6DdqM/zFwCsPxFGi\nJp4FhoFAXzQJrVg6g/HmDKuj+70whzSyBI5Uc6/7xqiPBGc3nync0fdHtXL/0UhF\nrnEPCL+ionaKZKwJthJGATPZ72QEUwRvlygksz+YeQKBgQD84+dX+cTCTUebO4UB\ncuL3V+F6j2W2FaHILm3wtTHZdmQo5t4CQzaFZ96xjjQzYhkiimySxkDGmsrHw5mx\nwnbzOOoJcIVqTSXrFdHJLtNspvqBKrU/LkINJm16nw3FlwC1VseynGvo5hYpeQ0W\njL65AX3JKy873Rr0/RCh29TDowKBgQC2hOTPMt41J9NAuBK7z8Sjlyeg9ulOosRi\n83vRh7bqYs9W6cNZrTAC3Bcf1n1GJsH3jLbWn93vuqUfCmkOocrWLyjuR6n4ePVg\nSBBQ1bld34vpSp92bcS7cfdRkUVxVxaqgTbgZFL+qpYrWLkYPyLhL1A/yUnlWicK\nQlxg2qzdPQKBgB8X/ofoo/KoAdfqV444DAQRgB3Lp9vdiQjN/KKOBNUSI3qL+Fwa\n24dHoDAAphZzR1fh4TuiuLAytCAfwrQCjxGUu+HxPdY2KiVfh23PHhvL5B0hnStp\niqGHSgq7p7vVtzaUtvUVGoeGUs9CnQNaxtCEiGzFrIcVxoy82OCt4Nk1AoGBALRl\nn11nkpcJONSD2whEb7+dG68NvEVbvS1sKJpNQC5j4TivLcTJ12VMMZLnRcR7dEV/\nkAuL0Skr2h5XBMVQhpGx5Qu2SznqG+TA9VdgFqnA1KGNfxTno4X9O4wkQHWotR9r\nPVkF774Dzw8izzc21/un7vJMujv1IhcSxgl4uVilAoGBAPOQIkc1NekW0mUY7Y5J\nnlLjw8m9TpUPPnZbjd+MWujUr3m26q1U/zpnseux/R+yoNv+Ktxzp0jE58tH0oZE\ngRHzUyrylqtIGLWq5x+vzlxZEWKVNPg8+3+k7PY+nYg9SUa4LIpr3BqzMIwd3BNn\n7rzldxPFkRHovfaEe7iQbvb8\n-----END PRIVATE KEY-----\n",
+  "client_email": "teoguideswapi@teoguide.iam.gserviceaccount.com",
+  "client_id": "111731231602698241667",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/teoguideswapi%40teoguide.iam.gserviceaccount.com"
+}

@@ -3,44 +3,37 @@ var mysql = require('mysql');
 var bodyParser = require('body-parser');
 
 
+
+
 const PORT = process.env.PORT || 3000;
-const Swagger = require('openapi-doc');
-const swagger = new Swagger();
-    swagger.info('My API', '1.0', 'This is *API*');
- 
-    // describe API endpoint and action
-    swagger.get('/logs')
-        .operationId('getLogs')
-        .tag('logging')
-        .summary('Gets an array of logs.')
-        .response(200)
-        .action((req, res) => {
-            res.sendStatus(200);
-        });
-const swaggerUi = require('swagger-ui-express');
-const openApiDocumentation = require('./index');
+
+const vision = require('@google-cloud/vision');
+const client = new vision.ImageAnnotatorClient({
+    keyFilename: './TeoGuide-2517cc5884b2.json'
+});
+  
 
 var con = mysql.createConnection({
+    host:'remotemysql.com',
+    user:'rapzajWRTH',
+    password:'7XZy5ZqrH2',
+    port: 3306,
+    database:'rapzajWRTH'
+});
+
+/* var con = mysql.createConnection({
     host:'us-cdbr-iron-east-02.cleardb.net',
     user:'b5f6ca89d2404e',
     password:'010d55c9',
     port: 3306,
     database:'heroku_ffe31819dfbd5d2'
-});
-
-
+});*/
 
 var app = express();
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}));
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup('./index.js'));
 
-
- 
-app.get('/api-doc', function (req, resp) {
-    resp.send(swagger.apidoc());
-});
 
 //get all centros 
 app.get("/centro",(req,res,next)=>{
@@ -58,6 +51,53 @@ app.get("/centro",(req,res,next)=>{
     });
 });
 
+//get buscarporfoto 
+app.get("/buscarFoto",(req,res,next)=>{
+/*     client
+        .labelDetection('img/08c.el-pensador-pequeño-1.jpg')
+        .then(results => {
+            const labels = results[0].labelAnnotations;
+
+            console.log('Labels:');
+            labels.forEach(label => console.log(label));
+            console.log('Results');
+            console.log(results);
+        })
+        
+        .catch(err => {
+            console.error('ERROR:', err);
+        }); */
+
+    client
+        .webDetection('img/08c.el-pensador-pequeño-1.jpg')
+        .then(response => {
+            const labels = response[0].webDetection.webEntities;
+            //var rst = []
+            console.log("Resultado");
+            labels.forEach(label => console.log(label.description));
+
+            //console.log(labels[0].description)
+            con.query("SELECT * FROM centrohistortico WHERE nNombre like '"+labels[0].description +"'",function(error,result,fields){
+                con.on('error',function (err) {
+                    console.log('[MY SQL ERROR]',err);
+                });
+
+                if (result && result.length) {
+                    res.end(JSON.stringify(result));
+                }else{
+                    res.end(JSON.stringify("No  hay centros en la BD"));
+                }
+            });
+
+
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    
+
+        
+});
 
 
 
@@ -264,6 +304,10 @@ app.post("/filter",(req,res,next)=>{
     })
 });
 
+function base64Image(src) {
+    var data = fs.readFileSync(src).toString('base64');
+    return util.format('data:%s;base64,%s', mime.lookup(src), data);
+  }
 
 app.listen(PORT,()=>{
     console.log('Teoguide REST  FULL ON ' + PORT);
