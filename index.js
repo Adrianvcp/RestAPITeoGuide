@@ -1,18 +1,37 @@
 var express = require('express');
 var mysql = require('mysql');
 var bodyParser = require('body-parser');
-
-
-
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 const PORT = process.env.PORT || 3000;
 
+//Req. Documentacion
+const swaggerOptions = {
+    swaggerDefinition: {
+      // Like the one described here: https://swagger.io/specification/#infoObject
+      info: {
+        title: 'TeoGuide Nodejs Documentacion',
+        version: '1.0.0',
+        description: 'Documentacion del restful en nodejs de teoguide',
+        contact:{
+            name:"Amazing Developer"
+        },
+        servers: ["http://localhost:5000"]
+        
+      }
+    },
+    // List of files to be processes. You can also set globs './routes/*.js'
+    apis: ['index.js'],
+  };
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+
+//Crd. Api Google Visio
 const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
     keyFilename: './TeoGuide-2517cc5884b2.json'
 });
   
-
+//Cred BD
 var con = mysql.createConnection({
     host:'remotemysql.com',
     user:'rapzajWRTH',
@@ -22,20 +41,24 @@ var con = mysql.createConnection({
 });
 
 
-/* var con = mysql.createConnection({
-    host:'us-cdbr-iron-east-02.cleardb.net',
-    user:'b5f6ca89d2404e',
-    password:'010d55c9',
-    port: 3306,
-    database:'heroku_ffe31819dfbd5d2'
-});*/
-
 var app = express();
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}));
 
 
+
+app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(swaggerDocs))
+
+//ROUTES
+/**
+ *  @swagger
+ *  /centro:
+ *    get:
+ *      description: Obtiene todos los centros Turisticos
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get all centros 
 app.get("/centro",(req,res,next)=>{
     con.query('SELECT * FROM centrohistortico recurso',function(error,result,fields){
@@ -52,6 +75,17 @@ app.get("/centro",(req,res,next)=>{
     });
 });
 
+
+
+/**
+ *  @swagger
+ *  /buscarFoto:
+ *    get:
+ *      description: Obtiene centro Turistico mediante la foto
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get buscarporfoto 
 app.get("/buscarFoto",(req,res,next)=>{
 /*     client
@@ -101,7 +135,15 @@ app.get("/buscarFoto",(req,res,next)=>{
 });
 
 
-
+/**
+ *  @swagger
+ *  /login:
+ *    get:
+ *      description: Ingreso al sistema con 2 parametros de entradad
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //LogIn
 app.post("/login",(req,res,next)=>{
     var post_data = req.body;
@@ -123,6 +165,15 @@ app.post("/login",(req,res,next)=>{
     })    
 });
 
+/**
+ *  @swagger
+ *  /centro/idcentro:
+ *    get:
+ *      description: Obtiene el centro Turistico mediante el id(1,2,3,etc)
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get centros por idCentroH
 app.get("/centro/:idcentroh",(req,res,next)=>{
     con.query('SELECT * FROM centrohistortico where idCentroH=?',[req.params.idcentroh],function(error,result,fields){
@@ -139,6 +190,15 @@ app.get("/centro/:idcentroh",(req,res,next)=>{
     });
 });
 
+/**
+ *  @swagger
+ *  /perfil/1:
+ *    get:
+ *      description: Obtiene el perfil del centro Turistico mediante el id(1,2,3,etc)
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get perfil Centro historico(con recursos) por idCentroH
 app.get("/perfil/:idcentroh",(req,res,next)=>{
     con.query('SELECT * FROM centrohistortico c INNER JOIN recurso r where c.idCentroH=?',[req.params.idcentroh],function(error,result,fields){
@@ -154,7 +214,15 @@ app.get("/perfil/:idcentroh",(req,res,next)=>{
     });
 });
 
-
+/**
+ *  @swagger
+ *  /usuario/1:
+ *    get:
+ *      description: Obtiene al usuario mediante el id(1,2,3,etc)
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get profile(usuario) por id
 app.get("/profile/:idusuario",(req,res,next)=>{
     con.query('SELECT * FROM usuario u INNER JOIN redessociales r where u.idUsuario=?',[req.params.idusuario],function(error,result,fields){
@@ -168,7 +236,6 @@ app.get("/profile/:idusuario",(req,res,next)=>{
         }
     });
 });
-
 
 //get
 app.post("/usuario",(req,res,next)=>{
@@ -190,6 +257,16 @@ app.post("/usuario",(req,res,next)=>{
     })    
 });
 
+
+/**
+ *  @swagger
+ *  /cronograma:
+ *    get:
+ *      description: Obtiene todos los cronogramas regisrados
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get all Cronograma
 app.get("/Cronograma",(req,res,next)=>{
     con.query('SELECT * FROM Cronograma',function(error,result,fields){
@@ -206,9 +283,15 @@ app.get("/Cronograma",(req,res,next)=>{
     });
 });
 
-
-
-
+/**
+ *  @swagger
+ *  /usuarios:
+ *    get:
+ *      description: Obtiene todos los usuarios
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get all Usuarios
 app.get("/usuarios",(req,res,next)=>{
     con.query('SELECT * FROM usuario',function(error,result,fields){
@@ -224,6 +307,16 @@ app.get("/usuarios",(req,res,next)=>{
 
     });
 });
+
+/**
+ *  @swagger
+ *  /centro:
+ *    get:
+ *      description: Obtiene todos los formatos para los recusos(.mp3,.avi,etc)
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get all formato
 app.get("/formato",(req,res,next)=>{
     con.query('SELECT * FROM formato',function(error,result,fields){
@@ -239,6 +332,16 @@ app.get("/formato",(req,res,next)=>{
 
     });
 });
+
+/**
+ *  @swagger
+ *  /centro:
+ *    get:
+ *      description: Obtiene todos los idiomas
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get all idioma
 app.get("/idioma",(req,res,next)=>{
     con.query('SELECT * FROM idioma',function(error,result,fields){
@@ -254,6 +357,16 @@ app.get("/idioma",(req,res,next)=>{
 
     });
 });
+
+/**
+ *  @swagger
+ *  /centro:
+ *    get:
+ *      description: Obtiene todos los recursos
+ *      responses:
+ *          '200':
+ *              description: Exito
+ */
 //get all Recursos
 app.get("/recursos",(req,res,next)=>{
     con.query('SELECT * FROM recursos',function(error,result,fields){
@@ -269,8 +382,6 @@ app.get("/recursos",(req,res,next)=>{
 
     });
 });
-
-
 
 app.post("/filter",(req,res,next)=>{
     var post_data = req.body;
