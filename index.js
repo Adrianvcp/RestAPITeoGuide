@@ -33,6 +33,7 @@ const client = new vision.ImageAnnotatorClient({
 });
   
 
+
 //Cred BD
 var con = mysql.createConnection({
     host:'remotemysql.com',
