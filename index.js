@@ -21,6 +21,7 @@ var con = mysql.createConnection({
     database:'rapzajWRTH'
 });
 
+
 /* var con = mysql.createConnection({
     host:'us-cdbr-iron-east-02.cleardb.net',
     user:'b5f6ca89d2404e',
