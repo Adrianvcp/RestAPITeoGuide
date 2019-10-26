@@ -23,6 +23,7 @@ const swaggerOptions = {
     // List of files to be processes. You can also set globs './routes/*.js'
     apis: ['index.js'],
   };
+  
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
 //Crd. Api Google Visio
