@@ -23,7 +23,7 @@ const swaggerOptions = {
     // List of files to be processes. You can also set globs './routes/*.js'
     apis: ['index.js'],
   };
-  
+
 const swaggerDocs = swaggerJsdoc(swaggerOptions);
 
 //Crd. Api Google Visio
@@ -32,6 +32,7 @@ const client = new vision.ImageAnnotatorClient({
     keyFilename: './TeoGuide-2517cc5884b2.json'
 });
   
+
 //Cred BD
 var con = mysql.createConnection({
     host:'remotemysql.com',
