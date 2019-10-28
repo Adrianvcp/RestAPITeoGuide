@@ -91,20 +91,6 @@ app.get("/centro",(req,res,next)=>{
  */
 //get buscarporfoto 
 app.get("/buscarFoto",(req,res,next)=>{
-/*     client
-        .labelDetection('img/08c.el-pensador-pequeño-1.jpg')
-        .then(results => {
-            const labels = results[0].labelAnnotations;
-
-            console.log('Labels:');
-            labels.forEach(label => console.log(label));
-            console.log('Results');
-            console.log(results);
-        })
-        
-        .catch(err => {
-            console.error('ERROR:', err);
-        }); */
 
     client
         .webDetection('img/08c.el-pensador-pequeño-1.jpg')
