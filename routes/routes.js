@@ -116,6 +116,7 @@ router.get('/', function (req, res){
 
 });
 
+
 router.get('/uploads/:upload', function (req, res){
     file = req.params.upload;
     console.log(req.params.upload);
