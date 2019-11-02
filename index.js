@@ -18,6 +18,7 @@ function base64Image(src) {
     return util.format('data:%s;base64,%s', mime.lookup(src), data);
   }
 
+  
 app.listen(PORT,()=>{
     console.log('Teoguide REST  FULL ON ' + PORT);
 })
