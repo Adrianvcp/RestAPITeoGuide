@@ -15,7 +15,7 @@ const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient({
     keyFilename: './TeoGuide-2517cc5884b2.json'
 });
-
+    
 //Req. Documentacion
 const swaggerOptions = {
     swaggerDefinition: {
@@ -85,7 +85,7 @@ router.use("/api-docs",swaggerUi.serve,swaggerUi.setup(swaggerDocs))
  */
 //get all centros 
 router.get("/centro",(req,res,next)=>{
-    con.query('SELECT * FROM centrohistortico recurso',function(error,result,fields){
+    con.query('SELECT * FROM centrohistortico',function(error,result,fields){
         con.on('error',function (err) {
             console.log('[MY SQL ERROR]',err);
         });
@@ -132,8 +132,8 @@ router.post(
       storage: storage
     }).single('upload'), function(req, res) {
       console.log(req.file);
-      console.log(req.body);
-      res.redirect("/uploads/" + req.file.filename);
+
+      //res.redirect("/uploads/" + req.file.filename);
       console.log(req.file.filename);
       client
         .webDetection(req.file.path)
@@ -142,27 +142,29 @@ router.post(
             //var rst = []
             console.log("Resultado");
             labels.forEach(label => console.log(label.description));
+            
+            for (let index = 0; index < labels.length; index++) 
+            {
+                console.log("DAto = "+ labels[index].description)
+                con.query("SELECT * FROM centrohistortico WHERE nNombre like '"+labels[index].description +"'",function(error,result,fields){
+                    con.on('error',function (err) {
+                        console.log('[MY SQL ERROR]',err);
+                    });
 
-            //console.log(labels[0].description)
-            con.query("SELECT * FROM centrohistortico WHERE nNombre like '"+labels[0].description +"'",function(error,result,fields){
-                con.on('error',function (err) {
-                    console.log('[MY SQL ERROR]',err);
+                    if (result && result.length) {
+                        res.end(JSON.stringify(result));
+                    }
                 });
-
-                if (result && result.length) {
-                    res.end(JSON.stringify(result));
-                }else{
-                    res.end(JSON.stringify("No  hay centros en la BD"));
-                }
-            });
-
+                if (index == labels.length) {
+                        res.end(JSON.stringify("No  hay centros en la BD"));
+                }  
+            }
+            
 
         })
         .catch(err => {
           console.error(err);
         });
-    
-      return res.status(200).end();
     });
 
     
@@ -218,7 +220,6 @@ router.post(
  */
 //get buscarporfoto 
 router.get("/buscarFoto",(req,res,next)=>{
-
     client
         .webDetection('C:\\Users\\pedro\\OneDrive\\Documentos\\TeoGuide\\RestAPITeoGuide\\img\\08c.el-pensador-pequeño-1.jpg')
         .then(response => {
@@ -239,15 +240,10 @@ router.get("/buscarFoto",(req,res,next)=>{
                     res.end(JSON.stringify("No  hay centros en la BD"));
                 }
             });
-
-
         })
         .catch(err => {
           console.error(err);
         });
-    
-
-        
 });
 
 
